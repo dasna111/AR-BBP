@@ -1,14 +1,15 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using ZXing;
 using ZXing.QrCode;
 
-private WebCamTexture camTexture;
-private Rect screenRect;
-
 public class Main : MonoBehaviour
 {
+    private WebCamTexture camTexture;
+    private Rect screenRect;
+
     #region QR
 
     void Start()
@@ -39,7 +40,10 @@ public class Main : MonoBehaviour
                 Debug.Log("DECODED TEXT FROM QR: " + result.Text);
             }
         }
-        catch (Exception ex) { Debug.LogWarning(ex.Message); }
+        catch (Exception ex)
+        {
+            Debug.LogWarning(ex.Message);
+        }
     }
     private static Color32[] Encode(string textForEncoding, int width, int height) // reading and writing QR
     {
