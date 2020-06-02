@@ -150,6 +150,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03cd70bd1f4d6d344a58d19eba68fe84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  queenPrefab: {fileID: 0}
+  rookPrefab: {fileID: 0}
+  knightPrefab: {fileID: 0}
 --- !u!4 &40919616
 Transform:
   m_ObjectHideFlags: 0

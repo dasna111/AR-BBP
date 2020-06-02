@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using ZXing;
 using ZXing.QrCode;
 
@@ -9,10 +10,31 @@ public class Main : MonoBehaviour
 {
     private WebCamTexture camTexture;
     private Rect screenRect;
+    public GameObject queenPrefab;
+    public GameObject rookPrefab;
+    public GameObject knightPrefab;
+
+    private Transform queen;
+    private Transform rook;
+    private Transform knight;
+    private float window = 0.3f;
+    public float[,] Base;
+    public float[,] End;
+
+    void Start()
+    {
+        Camera();
+        ChessStart();
+    }
+
+    void Update()
+    {
+        ChessMoves();
+    }
 
     #region QR
 
-    void Start()
+    void Camera()
     {
         screenRect = new Rect(0, 0, Screen.width, Screen.height);
         camTexture = new WebCamTexture();
@@ -114,4 +136,37 @@ public class Main : MonoBehaviour
     }
 
     #endregion Location
+
+    #region Chess
+
+    void ChessStart()
+    {
+        transform.position = new Vector3(0.0f, 0.0f, 0.0f);
+        queen = queenPrefab.transform;
+        rook = rookPrefab.transform;
+        knight = knightPrefab.transform;
+        queen.transform.position = new Vector3(0f, 0f, 0f);
+        rook.transform.position = new Vector3(0.0f, 0.0f, 0f);
+        knight.transform.position = new Vector3(0.0f, 0.0f, 0f);
+    }
+
+    void ChessMoves()
+    {
+        float horizontalInput = Input.GetAxis("Horizontal");
+        float verticalInput = Input.GetAxis("Vertical");
+        transform.position = transform.position + new Vector3(horizontalInput * window, verticalInput * window, 0);
+        CheckIfDone();
+    }
+    void CheckIfDone()
+    {
+        for (int i = 0; i < Base.Length; i++)
+            if (End[i, i] == Base[i, i])
+                GameOver();
+    }
+    void GameOver()
+    {
+        SceneManager.LoadScene("GameOver");
+    }
+
+    #endregion Chess
 }
